@@ -32,3 +32,4 @@
 *.app
 
 mk/LuaJIT
+mk/raylib

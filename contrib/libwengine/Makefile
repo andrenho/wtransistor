@@ -23,7 +23,7 @@ OBJ = \
 
 LUAJIT_PATH = $(CONFIG_MK_DIR)LuaJIT
 RAYLIB_PATH = $(CONFIG_MK_DIR)raylib
-CPPFLAGS += -I$(LUAJIT_PATH)/src
+CPPFLAGS += -I$(LUAJIT_PATH)/src -DLUAW=JIT
 
 libluajit.a:
 	mkdir -p $(LUAJIT_PATH)
@@ -42,6 +42,8 @@ libraylib.a:
 # libraries
 #
 
+$(OBJ): | libluajit.a libraylib.a
+
 libwengine-part.a: $(OBJ)
 	ar rcs $@ $^
 
@@ -49,7 +51,7 @@ libwengine.a: libwengine-part.a libluajit.a libraylib.a
 ifdef APPLE
 	libtool -static -o $@ $^
 else
-	libtool --mode=link cc -static -o $@ $^
+	ar cqT $@ $^ && echo -e 'create $@\naddlib $@\nsave\nend' | ar -M
 endif
 
 #
