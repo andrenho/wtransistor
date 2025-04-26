@@ -3,7 +3,7 @@
 
 #include <lua.hpp>
 #include <mutex>
-#include "luaw.hh"
+#include "luaw/luaw.hh"
 
 class Lua {
 public:

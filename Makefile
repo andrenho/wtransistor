@@ -11,7 +11,7 @@ include contrib/libwengine/mk/config.mk
 
 LIB_DEPS = libwengine.a
 
-CPPFLAGS += -Icontrib/libwengine/engine  # TODO
+CPPFLAGS += -Icontrib/libwengine -Icontrib/libwengine/mk/LuaJIT/src
 LDFLAGS += -lpthread
 
 #

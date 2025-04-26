@@ -14,7 +14,7 @@ include mk/config.mk
 #
 
 OBJ = \
-	engine/wengine.o \
+	wengine.o \
 	luaw/luaw.o
 
 #
