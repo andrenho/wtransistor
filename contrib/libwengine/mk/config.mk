@@ -60,7 +60,6 @@ endif
 
 DEPENDS = $(shell find . -type f -name '*.d')
 -include $(DEPENDS)
-CLEANFILES := $(DEPENDS) libluajit.a
 
 #
 # leak check command

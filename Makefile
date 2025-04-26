@@ -9,6 +9,9 @@ all: $(PROJECT_NAME)
 
 include contrib/libwengine/mk/config.mk
 
+LIB_DEPS = libwengine.a
+
+CPPFLAGS += -Icontrib/libwengine/engine  # TODO
 LDFLAGS += -lpthread
 
 #
@@ -18,10 +21,18 @@ LDFLAGS += -lpthread
 OBJ = main.o
 
 #
+# dependencies
+#
+
+libwengine.a:
+	$(MAKE) -C contrib/libwengine
+	cp contrib/libwengine/libwengine.a .
+
+#
 # executable
 #
 
-$(PROJECT_NAME): $(OBJ)
+$(PROJECT_NAME): $(OBJ) $(LIB_DEPS)
 	$(CXX) -o $@ $^ $(LDFLAGS)
 ifdef RELEASE
 	strip $@
@@ -40,7 +51,10 @@ softclean:
 
 .PHONY: clean
 clean: softclean
-	# $(MAKE) -C contrib/libwengine clean
-	rm -rf build-sdl3 libSDL3.a libluajit.a libwengine.a
+	$(MAKE) -C contrib/libwengine clean
+	rm -rf libwengine.a
+
+distclean:
+	$(MAKE) -C contrib/libwengine distclean
 
 FORCE: ;
